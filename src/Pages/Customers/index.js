@@ -1,18 +1,22 @@
-import { Avatar, Rate, Space, Table, Typography } from "antd";
-import { useEffect, useState } from "react";
-import { getCustomers, getInventory } from "../../API";
+import { Avatar,  Space, Table, Typography } from "antd";
+import { useEffect} from "react";
+
+import {useDispatch, useSelector} from "react-redux";
+import {fetchCustomers} from "../../redux/reducers/customers/actions";
 
 function Customers() {
-  const [loading, setLoading] = useState(false);
-  const [dataSource, setDataSource] = useState([]);
+    const {loading, data: dataSource} = useSelector(state => state.customers)
 
-  useEffect(() => {
-    setLoading(true);
-    getCustomers().then((res) => {
-      setDataSource(res.users);
-      setLoading(false);
-    });
-  }, []);
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchCustomers());
+
+    }, []);
+
+    console.log(dataSource)
+
+
 
   return (
     <Space size={20} direction="vertical">
@@ -29,32 +33,22 @@ function Customers() {
           },
           {
             title: "First Name",
-            dataIndex: "firstName",
+            dataIndex: "FirstName",
           },
           {
             title: "LastName",
-            dataIndex: "lastName",
+            dataIndex: "LastName",
           },
           {
             title: "Email",
-            dataIndex: "email",
+            dataIndex: "username",
           },
           {
             title: "Phone",
             dataIndex: "phone",
           },
 
-          {
-            title: "address",
-            dataIndex: "address",
-            render: (address) => {
-              return (
-                <span>
-                  {address.address}, {address.city}
-                </span>
-              );
-            },
-          },
+
         ]}
         dataSource={dataSource}
         pagination={{

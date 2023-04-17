@@ -1,68 +1,66 @@
-import { Avatar, Rate, Space, Table, Typography } from "antd";
-import { useEffect, useState } from "react";
-import { getInventory } from "../../API";
+import {Avatar,  Space, Table, Typography} from "antd";
+import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchProducts} from "../../redux/reducers/products/actions";
 
 function Inventory() {
-  const [loading, setLoading] = useState(false);
-  const [dataSource, setDataSource] = useState([]);
+    const {loading, data: dataSource} = useSelector(state => state.products)
 
-  useEffect(() => {
-    setLoading(true);
-    getInventory().then((res) => {
-      setDataSource(res);
-      setLoading(false);
-    });
-  }, []);
+    const dispatch = useDispatch()
 
-  return (
-    <Space size={20} direction="vertical">
-      <Typography.Title level={4}>Inventory</Typography.Title>
-      <Table
-        loading={loading}
-        columns={[
-          {
-            title: "image",
-            dataIndex: "image",
-            render: (link) => {
-              return <Avatar src={link} />;
-            },
-          },
-          {
-            title: "name",
-            dataIndex: "name",
-          },
-          {
-            title: "Price",
-            dataIndex: "price",
-            render: (value) => <span>${value}</span>,
-          },
-          {
-            title: "Rating",
-            dataIndex: "rating",
-            render: (rating) => {
-              return <Rate value={rating} allowHalf disabled />;
-            },
-          },
-          {
-            title: "Stock",
-            dataIndex: "stock",
-          },
+    useEffect(() => {
+        dispatch(fetchProducts());
 
-          {
-            title: "Brand",
-            dataIndex: "brand",
-          },
-          {
-            title: "Category",
-            dataIndex: "category",
-          },
-        ]}
-        dataSource={dataSource}
-        pagination={{
-          pageSize: 5,
-        }}
-      ></Table>
-    </Space>
-  );
+    }, []);
+
+    console.log(dataSource)
+
+    return (
+        <Space size={20} direction="vertical">
+            <Typography.Title level={4}>Inventory</Typography.Title>
+            <Table
+                loading={loading}
+
+                columns={[
+                    {
+                        title: "image",
+                        dataIndex: "image",
+                        render: (image) => {
+                            return <Avatar src={`http://localhost:4444/${image}`}/>;
+                        },
+                    },
+                    {
+                        title: "name",
+                        dataIndex: "name",
+
+                    },
+                    {
+                        title: "Price",
+                        dataIndex: "price",
+                        render: (value) => <span>${value}</span>,
+                    },
+
+                    {
+                        title: "Stock",
+                        dataIndex: "stock",
+                    },
+
+                    {
+                        title: "Brand",
+                        dataIndex: "brand",
+                    },
+                    {
+                        title: "Category",
+                        dataIndex: "category",
+                    },
+                ]}
+                dataSource={dataSource}
+                pagination={{
+                    pageSize: 5,
+                }}
+            ></Table>
+        </Space>
+    );
 }
+
 export default Inventory;
