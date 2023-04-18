@@ -7,6 +7,9 @@ import {fetchCustomers} from "../../redux/reducers/customers/actions";
 function Customers() {
     const {loading, data: dataSource} = useSelector(state => state.customers)
 
+    const auth = useSelector(state => state.auth)
+    console.log(auth)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -14,7 +17,7 @@ function Customers() {
 
     }, []);
 
-    console.log(dataSource)
+
 
 
 
@@ -27,25 +30,25 @@ function Customers() {
           {
             title: "Photo",
             dataIndex: "image",
-            render: (link) => {
-              return <Avatar src={link} />;
+              key:"id",
+            render: (image) => {
+              return <Avatar src={`http://localhost:4444/${image}`} />;
             },
           },
           {
             title: "First Name",
             dataIndex: "FirstName",
+              key:"id"
           },
           {
             title: "LastName",
             dataIndex: "LastName",
+              key:"id"
           },
           {
             title: "Email",
             dataIndex: "username",
-          },
-          {
-            title: "Phone",
-            dataIndex: "phone",
+              key:"id"
           },
 
 

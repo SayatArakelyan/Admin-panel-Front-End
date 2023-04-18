@@ -1,4 +1,4 @@
-import {Avatar,  Space, Table, Typography} from "antd";
+import {Avatar, Space, Table, Typography} from "antd";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProducts} from "../../redux/reducers/products/actions";
@@ -12,8 +12,8 @@ function Inventory() {
         dispatch(fetchProducts());
 
     }, []);
-
     console.log(dataSource)
+
 
     return (
         <Space size={20} direction="vertical">
@@ -21,34 +21,32 @@ function Inventory() {
             <Table
                 loading={loading}
 
+
                 columns={[
                     {
                         title: "image",
                         dataIndex: "image",
+                        key: "id",
                         render: (image) => {
+                            console.log(image)
                             return <Avatar src={`http://localhost:4444/${image}`}/>;
                         },
                     },
                     {
                         title: "name",
                         dataIndex: "name",
+                        key: "id"
+
 
                     },
                     {
                         title: "Price",
                         dataIndex: "price",
+                        key: "id",
                         render: (value) => <span>${value}</span>,
                     },
 
-                    {
-                        title: "Stock",
-                        dataIndex: "stock",
-                    },
 
-                    {
-                        title: "Brand",
-                        dataIndex: "brand",
-                    },
                     {
                         title: "Category",
                         dataIndex: "category",

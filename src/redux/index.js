@@ -8,6 +8,11 @@ const initialState = {
         loading: true,
         data: []
     },
+    auth: {
+        isAuthenticated: false,
+        isLoading: false,
+        user: null,
+    }
 }
 
 const composFunc = process.env.NODE_ENV=== "development" ? composeWithDevTools : compose
