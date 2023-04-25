@@ -5,10 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchCustomers} from "../../redux/reducers/customers/actions";
 
 function Customers() {
-    const {loading, data: dataSource} = useSelector(state => state.customers)
-
-    const auth = useSelector(state => state.auth)
-    console.log(auth)
+    const {loading, data: dataSourced} = useSelector(state => state.customers)
 
     const dispatch = useDispatch()
 
@@ -53,7 +50,7 @@ function Customers() {
 
 
         ]}
-        dataSource={dataSource}
+        dataSource={dataSourced}
         pagination={{
           pageSize: 5,
         }}

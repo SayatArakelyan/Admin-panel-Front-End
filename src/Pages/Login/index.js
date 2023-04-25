@@ -25,11 +25,14 @@ const tailLayout = {
 const LoginForm = () => {
     const user = localStorage.getItem(AUTH_TOKEN)
 
+
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const onFinish = (values) => {
         dispatch(signIn({username: values.username, password: values.password})).then(() => {
+
             navigate('/')
         })
     };

@@ -1,45 +1,55 @@
 import axios from 'axios';
-import {AUTH_TOKEN} from "../constants";
+import {AUTH_TOKEN, username} from "../constants";
+import {API_URL} from "../constants/api";
 
 
-export const getOrders = () => {
-  return fetch("https://dummyjson.com/carts/1").then((res) => res.json());
-};
+axios.defaults.headers.common['Content-Type'] = 'application/json';
 
-export const getRevenue = () => {
-  return fetch("https://dummyjson.com/carts").then((res) => res.json());
-};
+axios.interceptors.request.use(config => ({
+    ...config,
+    headers: {
+        ...config.headers,
+        "Authorization": JSON.parse(localStorage.getItem(AUTH_TOKEN)),
+
+    },
+}))
 
 export const getInventory = () => {
-  return fetch(`http://localhost:4444/api/products`).then((res) => res.json());
+    return axios.get(`${API_URL}/products`);
+};
+
+export const createInventory = ({name = '', price = 0, description = '', category_id = 0, image}) => {
+    const fd = new FormData();
+
+    fd.append('name', name);
+    fd.append('price', price.toString());
+    fd.append('description', description);
+    fd.append('category_id', category_id.toString());
+    fd.append('image', image);
+
+    return axios.post(`${API_URL}/products`, fd, {headers: {'Content-Type': 'multipart/form-data'}});
+};
+
+export const deleteInventory = (id) => {
+    return axios.delete(`http://localhost:4444/api/products${id}`).then((res) => res.json());
+};
+
+export const updateInventory = (id) => {
+    return fetch(`http://localhost:4444/api/products${id}`, {
+        method: 'PATCH',
+
+
+        headers: {
+            'Content-Type': 'application/json'
+            // "Content-Type": "multipart/form-data; boundary=something"
+        },
+        body: JSON.stringify({})
+    }).then((res) => res.json());
 };
 
 export const getCustomers = () => {
-  return fetch("http://localhost:4444/api/users").then((res) => res.json());
-};
-export const getComments = () => {
-  return fetch("https://dummyjson.com/comments").then((res) => res.json());
+    return fetch("http://localhost:4444/api/users").then((res) => res.json());
 };
 
-
-export const setHeaders = () => {
-  const headers = {
-    headers: {
-      "x-auth-token": localStorage.getItem("token"),
-    },
-  };
-
-  return headers;
-};
-
-
-axios.interceptors.request.use(config => ({
-  ...config,
-  header: {
-    ...config.headers,
-    'Content-Type': 'application/json',
-    "x-auth-token": localStorage.getItem(AUTH_TOKEN),
-  }
-}))
 
 export {axios}

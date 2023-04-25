@@ -7,10 +7,14 @@ import SideMenu from "../../admin-panel/src/Components/SideMenu";
 function App() {
     return (
         <div className="App">
+
+
             <AppHeader />
             <div className="SideMenuAndPageContent">
-                <SideMenu></SideMenu>
-                <PageContent></PageContent>
+
+                <SideMenu/>
+                <PageContent/>
+
             </div>
             <AppFooter />
         </div>

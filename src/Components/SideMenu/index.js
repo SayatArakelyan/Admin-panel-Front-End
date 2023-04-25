@@ -1,12 +1,8 @@
-import {
-  AppstoreOutlined,
-  ShopOutlined,
-  ShoppingCartOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { ShopOutlined,  UserOutlined,HighlightOutlined} from "@ant-design/icons";
 import { Menu } from "antd";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
 
 function SideMenu() {
   const location = useLocation();
@@ -29,26 +25,24 @@ function SideMenu() {
         }}
         selectedKeys={[selectedKeys]}
         items={[
-          {
-            label: "Dashbaord",
-            icon: <AppstoreOutlined />,
-            key: "/",
-          },
+
           {
             label: "Inventory",
-            key: "/inventory",
+            key: "/",
             icon: <ShopOutlined />,
           },
-          {
-            label: "Orders",
-            key: "/orders",
-            icon: <ShoppingCartOutlined />,
-          },
+
           {
             label: "Customers",
             key: "/customers",
             icon: <UserOutlined />,
           },
+          {
+            label: "Posts",
+            key: "/posts",
+            icon: <HighlightOutlined />,
+          },
+
         ]}
       ></Menu>
     </div>
