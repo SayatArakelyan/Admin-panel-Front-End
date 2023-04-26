@@ -28,6 +28,8 @@ export const signIn = ({username, password,}) => (dispatch) => {
             const token = res.data.jwt;
             const username = res.data.username
 
+
+
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: {

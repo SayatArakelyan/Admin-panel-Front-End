@@ -30,22 +30,26 @@ export const createInventory = ({name = '', price = 0, description = '', categor
     return axios.post(`${API_URL}/products`, fd, {headers: {'Content-Type': 'multipart/form-data'}});
 };
 
-export const deleteInventory = (id) => {
-    return axios.delete(`http://localhost:4444/api/products${id}`).then((res) => res.json());
-};
+// export const deleteInventory = (id) => {
+//     return axios.delete(`http://localhost:4444/api/products${id}`).then((res) => res.json());
+// };
 
-export const updateInventory = (id) => {
-    return fetch(`http://localhost:4444/api/products${id}`, {
-        method: 'PATCH',
+export const deleteInventory = ({id}) => {
+return  axios.delete(`${API_URL}/products/${id}`, {
+    headers:{
+        "Content-Type":"application/json",
+        "Authorization": JSON.parse(localStorage.getItem(AUTH_TOKEN)),
+
+    }
+})
 
 
-        headers: {
-            'Content-Type': 'application/json'
-            // "Content-Type": "multipart/form-data; boundary=something"
-        },
-        body: JSON.stringify({})
-    }).then((res) => res.json());
-};
+
+
+}
+
+
+
 
 export const getCustomers = () => {
     return fetch("http://localhost:4444/api/users").then((res) => res.json());

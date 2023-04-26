@@ -14,7 +14,7 @@ function AppHeader() {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const auth = useSelector(state => state.auth);
 
-    console.log(auth.user)
+
 
 
     const handleSignOut = () => {

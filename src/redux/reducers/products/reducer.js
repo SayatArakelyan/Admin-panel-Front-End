@@ -8,6 +8,8 @@ const reducer = (state = {}, action) => {
             return {...state, loading: false, data: action.payload};
         case GET_PRODUCTS_FAILURE:
             return {...state, loading: false, data: []};
+
+
         default:
             return state;
     }

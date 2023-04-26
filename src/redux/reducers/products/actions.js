@@ -1,9 +1,10 @@
-import {getInventory, createInventory} from "../../../API";
+import {getInventory, createInventory,deleteInventory} from "../../../API";
 
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const GET_PRODUCTS_SUCCESS = 'GET_PRODUCTS_SUCCESS';
 export const GET_PRODUCTS_FAILURE = 'GET_PRODUCTS_FAILURE';
 export const CREATE_PRODUCTS = 'CREATE_PRODUCTS';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
 
 export const requestProducts = () => ({
@@ -51,3 +52,18 @@ export const addProduct = ({name, price, description, category_id, image}) => {
             });
     };
 };
+
+export const deleteProduct = ({ id }) => {
+    return (dispatch) => {
+        return deleteInventory({ id })
+            .then(({ data }) => {
+                dispatch({
+                    type: DELETE_PRODUCT,
+                    payload: id
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+}

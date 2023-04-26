@@ -1,18 +1,35 @@
-import {Avatar, Space, Table, Typography} from "antd";
-import {useEffect} from "react";
+import {Avatar, Space, Table, Typography, Button} from "antd";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProducts} from "../../redux/reducers/products/actions";
+import {deleteProduct} from "../../redux/reducers/products/actions";
 
 function Inventory() {
     const {loading, data: dataSource} = useSelector(state => state.products)
 
+    const [originalData, setOriginalData] = useState([]);
+
+
     const dispatch = useDispatch()
+
 
     useEffect(() => {
         dispatch(fetchProducts());
 
     }, []);
-    console.log(dataSource)
+
+    useEffect(() => {
+        setOriginalData(dataSource);
+    }, [dataSource]);
+
+
+    const handleDelete = (id) => {
+        const index = originalData.findIndex((item) => item.id === id);
+        const newData = [...originalData];
+        newData.splice(index, 1);
+        setOriginalData(newData);
+        dispatch(deleteProduct({id: id}))
+    }
 
 
     return (
@@ -49,10 +66,21 @@ function Inventory() {
 
                     {
                         title: "Category",
-                        dataIndex: "category",
+                        dataIndex: "category_id",
                     },
+                    {
+                        title: "",
+                        dataIndex: "id",
+                        key: "delete",
+                        render: (id) => (
+                            <Button danger onClick={() => handleDelete(id)}>
+                                Delete
+                            </Button>
+                        ),
+                    },
+
                 ]}
-                dataSource={dataSource}
+                dataSource={originalData}
                 pagination={{
                     pageSize: 5,
                 }}
