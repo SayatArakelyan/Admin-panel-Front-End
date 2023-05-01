@@ -1,13 +1,21 @@
-import {Avatar, Space, Table, Typography, Button} from "antd";
+import {Avatar, Space, Table, Typography, Button,Modal} from "antd";
+
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProducts} from "../../redux/reducers/products/actions";
-import {deleteProduct} from "../../redux/reducers/products/actions";
+import {deleteProduct,updateProduct} from "../../redux/reducers/products/actions";
+import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import ProductForm from "../../Components/ProductForm";
+
 
 function Inventory() {
     const {loading, data: dataSource} = useSelector(state => state.products)
 
     const [originalData, setOriginalData] = useState([]);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
 
 
     const dispatch = useDispatch()
@@ -30,7 +38,23 @@ function Inventory() {
         setOriginalData(newData);
         dispatch(deleteProduct({id: id}))
     }
+    const handleEdit = (product) => {
+        setSelectedProduct(product);
+        setIsModalVisible(true);
+    };
 
+    const handleCancelEdit = () => {
+        setSelectedProduct(null);
+        setIsModalVisible(false);
+    };
+    const handleUpdate = (updatedProduct) => {
+        const updatedData = originalData.map((product) =>
+            product.id === updatedProduct.id ? updatedProduct : product
+        );
+        setOriginalData(updatedData);
+        dispatch(updateProduct(updatedProduct));
+        setIsModalVisible(false);
+    };
 
     return (
         <Space size={20} direction="vertical">
@@ -57,6 +81,13 @@ function Inventory() {
 
                     },
                     {
+                        title: "description",
+                        dataIndex: "description",
+                        key: "id"
+
+
+                    },
+                    {
                         title: "Price",
                         dataIndex: "price",
                         key: "id",
@@ -73,11 +104,20 @@ function Inventory() {
                         dataIndex: "id",
                         key: "delete",
                         render: (id) => (
-                            <Button danger onClick={() => handleDelete(id)}>
-                                Delete
-                            </Button>
+                            <DeleteOutlined danger onClick={() => handleDelete(id)}>
+
+                            </DeleteOutlined>
                         ),
                     },
+                    {
+                        title: "",
+                        dataIndex: "id",
+                        key: "edit",
+                        render: (id, record) => (
+                            <EditOutlined onClick={() => handleEdit(record)} />
+                        ),
+                    },
+
 
                 ]}
                 dataSource={originalData}
@@ -85,6 +125,19 @@ function Inventory() {
                     pageSize: 5,
                 }}
             ></Table>
+            <Modal
+                visible={isModalVisible}
+                onCancel={handleCancelEdit}
+                footer={null}
+            >
+                <ProductForm
+                    product={selectedProduct}
+                    onCancel={handleCancelEdit}
+                    onSubmit={handleUpdate}
+                    onupdate={handleUpdate}
+                />
+            </Modal>
+
         </Space>
     );
 }

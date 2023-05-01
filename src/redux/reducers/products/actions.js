@@ -1,11 +1,11 @@
-import {getInventory, createInventory,deleteInventory} from "../../../API";
+import {getInventory, createInventory,deleteInventory,updateInventory} from "../../../API";
 
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const GET_PRODUCTS_SUCCESS = 'GET_PRODUCTS_SUCCESS';
 export const GET_PRODUCTS_FAILURE = 'GET_PRODUCTS_FAILURE';
 export const CREATE_PRODUCTS = 'CREATE_PRODUCTS';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
-
+export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 
 export const requestProducts = () => ({
     type: GET_PRODUCTS,
@@ -67,3 +67,18 @@ export const deleteProduct = ({ id }) => {
             })
     }
 }
+export const updateProduct = ({ id }) => {
+    return (dispatch) => {
+        return updateInventory({ id })
+            .then(({ data }) => {
+                dispatch({
+                    type: UPDATE_PRODUCT,
+                    payload: id
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+}
+

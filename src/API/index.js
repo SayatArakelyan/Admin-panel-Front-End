@@ -18,7 +18,7 @@ export const getInventory = () => {
     return axios.get(`${API_URL}/products`);
 };
 
-export const createInventory = ({name = '', price = 0, description = '', category_id = 0, image}) => {
+export const createInventory = ({name = '', price = 0, description = '', category_id = 0, image = null}) => {
     const fd = new FormData();
 
     fd.append('name', name);
@@ -30,24 +30,29 @@ export const createInventory = ({name = '', price = 0, description = '', categor
     return axios.post(`${API_URL}/products`, fd, {headers: {'Content-Type': 'multipart/form-data'}});
 };
 
-// export const deleteInventory = (id) => {
-//     return axios.delete(`http://localhost:4444/api/products${id}`).then((res) => res.json());
-// };
 
 export const deleteInventory = ({id}) => {
-return  axios.delete(`${API_URL}/products/${id}`, {
-    headers:{
-        "Content-Type":"application/json",
-        "Authorization": JSON.parse(localStorage.getItem(AUTH_TOKEN)),
+    return axios.delete(`${API_URL}/products/${id}`, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": JSON.parse(localStorage.getItem(AUTH_TOKEN)),
 
-    }
-})
-
-
+        }
+    })
 
 
 }
+export const updateInventory = ({id}) => {
+    return axios.put(`${API_URL}/products/${id}`, null,{
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": JSON.parse(localStorage.getItem(AUTH_TOKEN)),
 
+        }
+    })
+
+
+}
 
 
 
