@@ -1,6 +1,6 @@
 import {returnErrors} from './errorActions';
 import {axios} from "../../../API";
-import {AUTH_TOKEN, username} from "../../../constants";
+import {AUTH_TOKEN} from "../../../constants";
 
 
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -14,19 +14,19 @@ export const initUser = () => (dispatch) => {
     dispatch({
         type: LOGIN_SUCCESS,
         payload: {
-            name: username
+            name: "Sayat Arakelyan"
         },
     });
 }
 
-export const signIn = ({username, password,}) => (dispatch) => {
+export const signIn = ({Email, password,}) => (dispatch) => {
     dispatch({type: USER_LOADING});
 
     return axios
-        .post('http://localhost:4444/api/auth/login', {username, password})
+        .post('http://localhost:4444/api/auth/login', {Email, password})
         .then((res) => {
             const token = res.data.jwt;
-            const username = res.data.username
+            const email = res.data.Email
 
 
 
@@ -34,11 +34,11 @@ export const signIn = ({username, password,}) => (dispatch) => {
                 type: LOGIN_SUCCESS,
                 payload: {
 
-                    name: username
+                    name:Email
                 },
             });
             localStorage.setItem(AUTH_TOKEN, JSON.stringify(token))
-            localStorage.setItem(username, JSON.stringify(username))
+            localStorage.setItem(email, JSON.stringify(Email))
         })
         .catch((err) => {
             dispatch(returnErrors(err.response.data, err.response.status));

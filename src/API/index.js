@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {AUTH_TOKEN, username} from "../constants";
+import {AUTH_TOKEN} from "../constants";
 import {API_URL} from "../constants/api";
 
 
@@ -34,7 +34,7 @@ export const createInventory = ({name = '', price = 0, description = '', categor
 export const deleteInventory = ({id}) => {
     return axios.delete(`${API_URL}/products/${id}`, {
         headers: {
-            "Content-Type": "application/json",
+
             "Authorization": JSON.parse(localStorage.getItem(AUTH_TOKEN)),
 
         }
@@ -43,7 +43,7 @@ export const deleteInventory = ({id}) => {
 
 }
 export const updateInventory = ({id}) => {
-    return axios.put(`${API_URL}/products/${id}`, null,{
+    return axios.put(`${API_URL}/products/${id}`, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": JSON.parse(localStorage.getItem(AUTH_TOKEN)),
@@ -53,6 +53,14 @@ export const updateInventory = ({id}) => {
 
 
 }
+
+export const getMessages = () => {
+    return axios.get(`http://localhost:4444/api/sendEmail`, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            "Authorization": JSON.parse(localStorage.getItem(AUTH_TOKEN)),        },
+    });
+};
 
 
 

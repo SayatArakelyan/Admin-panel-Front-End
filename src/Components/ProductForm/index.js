@@ -8,7 +8,7 @@ function ProductForm({ product, onCancel }) {
 
 
     const handleFinish = (id) => {
-dispatch(updateProduct({id}))
+dispatch(updateProduct({id:id}))
 
         onCancel();
     };
@@ -22,7 +22,7 @@ dispatch(updateProduct({id}))
         <Form
             form={form}
             layout="vertical"
-            onFinish={(values)=>handleFinish()}
+            onFinish={({id})=>handleFinish()}
             initialValues={product}
         >
 

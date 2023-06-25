@@ -52,7 +52,7 @@ function Inventory() {
             product.id === updatedProduct.id ? updatedProduct : product
         );
         setOriginalData(updatedData);
-        dispatch(updateProduct(updatedProduct));
+        dispatch(updateProduct({id: updatedProduct.id}));
         setIsModalVisible(false);
     };
 
@@ -75,14 +75,14 @@ function Inventory() {
                     },
                     {
                         title: "name",
-                        dataIndex: "name",
+                        dataIndex: "nameEn",
                         key: "id"
 
 
                     },
                     {
                         title: "description",
-                        dataIndex: "description",
+                        dataIndex: "descriptionEn",
                         key: "id"
 
 
@@ -97,7 +97,7 @@ function Inventory() {
 
                     {
                         title: "Category",
-                        dataIndex: "category_id",
+                        dataIndex: "category",
                     },
                     {
                         title: "",

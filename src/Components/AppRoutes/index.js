@@ -7,14 +7,13 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import {AUTH_TOKEN} from "../../constants";
 import {initUser} from "../../redux/reducers/Auth/authActions";
 import {useDispatch} from "react-redux";
+import Messages from "../../Pages/Messages/Messages";
 
 function AppRoutes() {
     const user = localStorage.getItem(AUTH_TOKEN);
     const dispatch = useDispatch();
 
     if (user) {
-
-
         dispatch(initUser());
     }
 
@@ -24,6 +23,7 @@ function AppRoutes() {
             <Route path="/" element={<ProtectedRoute user={user}><Inventory/></ProtectedRoute>}/>
             <Route path="/customers" element={<ProtectedRoute user={user}><Customers/></ProtectedRoute> }/>
             <Route path="/posts" element={<ProtectedRoute user={user}><Posts/></ProtectedRoute>}/>
+            <Route path="/messages" element={<ProtectedRoute user={user}><Messages/></ProtectedRoute>}/>
             <Route path="/login" element={<Login/>}/>
         </Routes>
     );

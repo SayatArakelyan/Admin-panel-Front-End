@@ -1,4 +1,4 @@
-import { ShopOutlined,  UserOutlined,HighlightOutlined} from "@ant-design/icons";
+import { ShopOutlined,  UserOutlined,HighlightOutlined,MessageOutlined} from "@ant-design/icons";
 import { Menu } from "antd";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -41,6 +41,11 @@ function SideMenu() {
             label: "Posts",
             key: "/posts",
             icon: <HighlightOutlined />,
+          },
+          {
+            label: "Messages",
+            key: "/messages",
+            icon: <MessageOutlined />
           },
 
         ]}

@@ -31,7 +31,7 @@ const LoginForm = () => {
     const navigate = useNavigate()
 
     const onFinish = (values) => {
-        dispatch(signIn({username: values.username, password: values.password})).then(() => {
+        dispatch(signIn({Email: values.Email, password: values.password})).then(() => {
 
             navigate('/')
         })
@@ -60,8 +60,8 @@ const LoginForm = () => {
 
         >
             <Form.Item
-                label="Username"
-                name="username"
+                label="Email"
+                name="Email"
                 rules={[
                     {
                         required: true,
